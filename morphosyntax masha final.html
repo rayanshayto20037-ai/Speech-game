@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<!-- saved from url=(0071)file:///C:/Users/Rayan/Downloads/malika_masha_edited_action_photos.html -->
+<html lang="ar" dir="rtl"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مليكة وماشا - الألعاب الضائعة</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Tahoma", "Arial", sans-serif;
+      background: radial-gradient(circle at top, #fff7ad 0%, #ffe3ec 35%, #dff6ff 100%);
+      min-height: 100vh;
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    .game {
+      max-width: 1280px;
+      margin: auto;
+      padding: 18px;
+    }
+
+    .header {
+      text-align: center;
+      background: rgba(255,255,255,0.96);
+      border-radius: 30px;
+      padding: 16px;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.10);
+      margin-bottom: 16px;
+      border: 4px solid #fff;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 36px;
+      color: #d63384;
+    }
+
+    .subtitle {
+      margin-top: 8px;
+      font-size: 22px;
+      color: #444;
+      font-weight: bold;
+    }
+
+    .mission-bar {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .mission-chip {
+      background: #fff3bf;
+      border: 3px solid #ffd43b;
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .scene {
+      display: grid;
+      grid-template-columns: 1fr 1.18fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .story-panel, .activity-panel {
+      background: rgba(255,255,255,0.94);
+      border-radius: 32px;
+      padding: 18px;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+      border: 3px solid rgba(255,255,255,0.85);
+    }
+
+    .image-box {
+      border: 4px dashed #ff85a1;
+      border-radius: 28px;
+      min-height: 390px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: #fff8fb;
+      overflow: hidden;
+      position: relative;
+      margin-bottom: 16px;
+    }
+
+    .image-box img {
+      width: 100%;
+      height: 100%;
+      min-height: 390px;
+      object-fit: cover;
+      display: none;
+    }
+
+    .sparkle-label {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: rgba(255,255,255,0.92);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #d63384;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+    }
+
+    .placeholder-text {
+      padding: 20px;
+      font-size: 20px;
+      color: #777;
+      line-height: 1.6;
+    }
+
+    .characters {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .character-card {
+      min-height: 125px;
+      border-radius: 26px;
+      background: #f8f9fa;
+      border: 3px solid #e9ecef;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: 0.2s;
+      padding: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .character-card::before {
+      content: "🔍";
+      position: absolute;
+      top: 8px;
+      left: 10px;
+      font-size: 22px;
+      opacity: 0.4;
+    }
+
+    .character-card:hover, .character-card.active {
+      transform: scale(1.03);
+      border-color: #ff85a1;
+      background: #fff0f6;
+    }
+
+    .character-card.done {
+      background: #ebfbee;
+      border-color: #51cf66;
+    }
+
+    .emoji {
+      font-size: 44px;
+      margin-bottom: 6px;
+    }
+
+    .small-label {
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .masha-area {
+      display: grid;
+      grid-template-columns: 190px 1fr;
+      gap: 12px;
+      align-items: stretch;
+      margin-bottom: 18px;
+    }
+
+    .masha-visual-box {
+      background: #fff8fb;
+      border: 3px dashed #ff85a1;
+      border-radius: 26px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 175px;
+      text-align: center;
+      color: #777;
+      font-size: 16px;
+      padding: 8px;
+      position: relative;
+    }
+
+    .masha-visual-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+
+    .speech-bubble {
+      background: #fff0f6;
+      border: 3px solid #ff85a1;
+      border-radius: 28px;
+      padding: 16px;
+      text-align: center;
+      position: relative;
+    }
+
+    .speech-bubble::after {
+      content: "";
+      position: absolute;
+      right: -18px;
+      top: 45px;
+      border-width: 14px 0 14px 18px;
+      border-style: solid;
+      border-color: transparent transparent transparent #ff85a1;
+    }
+
+    .masha-title {
+      font-size: 22px;
+      color: #c9184a;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .wrong-sentence {
+      font-size: 34px;
+      font-weight: bold;
+      color: #b00020;
+      background: white;
+      border-radius: 24px;
+      padding: 16px;
+      min-height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 0 0 3px #ffe3ec;
+    }
+
+    .mini-instruction {
+      margin-top: 8px;
+      font-size: 18px;
+      color: #555;
+      font-weight: bold;
+    }
+
+    .controls {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 16px 0;
+    }
+
+    button {
+      border: none;
+      border-radius: 24px;
+      padding: 16px 22px;
+      font-size: 22px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.14);
+    }
+
+    button:hover { transform: translateY(-2px) scale(1.02); }
+
+    .primary { background: #4dabf7; color: white; }
+    .success { background: #51cf66; color: white; }
+    .warning { background: #ffd43b; color: #333; }
+    .danger { background: #ff6b6b; color: white; }
+    .purple { background: #cc5de8; color: white; }
+
+    .sentence-strip {
+      background: #f1f3f5;
+      border-radius: 28px;
+      padding: 14px;
+      min-height: 135px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      border: 3px solid #dee2e6;
+      margin-bottom: 18px;
+    }
+
+    .strip-card {
+      min-width: 105px;
+      min-height: 94px;
+      border-radius: 24px;
+      background: white;
+      border: 3px solid #adb5bd;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      font-size: 22px;
+      font-weight: bold;
+      animation: popIn 0.25s ease;
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.85); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .red-circle {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: #ff0000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .choices {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .choice-group {
+      background: #f8f9fa;
+      border-radius: 24px;
+      padding: 12px;
+      border: 2px solid #dee2e6;
+    }
+
+    .choice-title {
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: #495057;
+    }
+
+    .choice-buttons {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .choice {
+      background: white;
+      border: 3px solid #ced4da;
+      border-radius: 20px;
+      padding: 10px 12px;
+      font-size: 20px;
+      min-width: 92px;
+    }
+
+    .choice.selected {
+      border-color: #51cf66;
+      background: #ebfbee;
+      transform: scale(1.04);
+    }
+
+    .feedback {
+      text-align: center;
+      font-size: 28px;
+      font-weight: bold;
+      min-height: 46px;
+      color: #2b8a3e;
+      margin-top: 10px;
+    }
+
+    .stars {
+      text-align: center;
+      font-size: 36px;
+      letter-spacing: 4px;
+      min-height: 48px;
+    }
+
+    .toy-shelf {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 10px 0 16px;
+    }
+
+    .toy {
+      font-size: 36px;
+      width: 62px;
+      height: 62px;
+      border-radius: 18px;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 3px solid #ffd43b;
+      filter: grayscale(1);
+      opacity: 0.55;
+      transition: 0.3s;
+    }
+
+    .toy.awake {
+      filter: grayscale(0);
+      opacity: 1;
+      transform: rotate(-5deg) scale(1.12);
+      background: #fff3bf;
+    }
+
+    .hidden { display: none; }
+
+    .confetti {
+      position: fixed;
+      top: -20px;
+      font-size: 28px;
+      animation: fall 1.8s linear forwards;
+      z-index: 999;
+      pointer-events: none;
+    }
+
+    @keyframes fall {
+      to { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
+
+    @media (max-width: 950px) {
+      .scene { grid-template-columns: 1fr; }
+      .choices { grid-template-columns: 1fr; }
+      .masha-area { grid-template-columns: 1fr; }
+      .speech-bubble::after { display: none; }
+      h1 { font-size: 28px; }
+      .wrong-sentence { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="game">
+    <div class="header">
+      <h1>مليكة وماشا والألعاب الضائعة</h1>
+      <div class="subtitle">ماشا عم تلخبط بالجمل... ومليكة خبيرة التصحيح!</div>
+      <div class="mission-bar">
+        <div class="mission-chip">🎧 نسمع ماشا</div>
+        <div class="mission-chip">🔍 نلاقي مين عم يعمل</div>
+        <div class="mission-chip">🧩 نركّب الجملة</div>
+        <div class="mission-chip">🧸 نفيّق الألعاب</div>
+      </div>
+    </div>
+
+    <div class="scene">
+      <section class="story-panel">
+        <div class="image-box">
+          <div class="sparkle-label">بيت ألعاب ماشا ✨</div>
+          <img id="sceneImage" src="./morphosyntax masha final_files/masha plays.jpg" alt="الأطفال داخل بيت ماشا" style="display: block;">
+          <div id="scenePlaceholder" class="placeholder-text" style="display: none;">
+            ضعي هنا صورة الأطفال داخل بيت ماشا.<br>
+            استعملي اسم ملف قصير مثل: toy-house.png
+          </div>
+        </div>
+
+        <div class="characters">
+          <div class="character-card active" onclick="startCase(0)">
+            <div class="emoji">👦🧸</div>
+            <div class="small-label">صبي عم يلعب</div>
+          </div>
+          <div class="character-card" onclick="startCase(1)">
+            <div class="emoji">👧🎨</div>
+            <div class="small-label">بنت عم تلوّن</div>
+          </div>
+          <div class="character-card" onclick="startCase(2)">
+            <div class="emoji">👧📖</div>
+            <div class="small-label">بنت عم تقرأ</div>
+          </div>
+          <div class="character-card" onclick="startCase(3)">
+            <div class="emoji">🐻📖</div>
+            <div class="small-label">دب عم يقرأ</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="activity-panel">
+        <div class="masha-area">
+          <div class="masha-visual-box">
+            <img id="mashaVisual" src="./morphosyntax masha final_files/ChatGPT Image May 26, 2026, 01_25_21 PM.png" alt="ماشا تحكي مع مليكة" style="display: block;">
+            <div id="mashaVisualPlaceholder" style="display: none;">
+              ضعي هنا صورة ماشا تحكي مع مليكة.<br>
+              استعملي اسم ملف قصير مثل: masha-malika.png
+            </div>
+          </div>
+
+          <div class="speech-bubble">
+            <div class="masha-title">ماشا قالت جملة ملخبطة:</div>
+            <div id="wrongSentence" class="wrong-sentence">صبي عم العب</div>
+            <div class="mini-instruction">مليكة لازم تصلّحها بجملة كاملة 👇</div>
+          </div>
+        </div>
+
+        <div class="controls">
+          <button class="primary" onclick="playMashaAudio()">🔊 اسمعي ماشا</button>
+          <button class="warning" onclick="showLevel1()">👀 ورجيني الجملة الصح</button>
+          <button class="success" onclick="showLevel2()">🎲 خلي مليكة تختار</button>
+          <button class="purple" onclick="sayTogether()">🗣️ نقولها سوا</button>
+          <button class="danger" onclick="nextCase()">➡️ جملة جديدة</button>
+        </div>
+
+        <div class="toy-shelf" id="toyShelf">
+          <div class="toy awake">🧸</div>
+          <div class="toy">🎨</div>
+          <div class="toy">📖</div>
+          <div class="toy">🐻</div>
+        </div>
+
+        <div class="stars" id="stars">⭐⭐⭐</div>
+
+        <div id="level1" class="hidden">
+          <div class="sentence-strip" id="correctStrip" style="transform: scale(1); transition: 0.2s;"><div class="strip-card"><div class="emoji">👦</div><div>صبي</div></div><div class="strip-card"><div class="red-circle">عم</div><div>عم</div></div><div class="strip-card"><div class="emoji">🥸</div><div>ي</div></div><div class="strip-card"><div class="emoji">🧸</div><div>لعب</div></div><div class="strip-card" style="min-width: 230px;"><div style="font-size:26px;color:#2b8a3e;">صبي عم يلعب</div></div></div>
+          <div class="feedback" id="level1Feedback"></div>
+        </div>
+
+        <div id="level2" class="hidden">
+          <div class="sentence-strip" id="buildStrip"><div class="strip-card" style="opacity: 0.45;">؟</div><div class="strip-card" style="opacity: 0.45;">؟</div><div class="strip-card" style="opacity: 0.45;">؟</div><div class="strip-card" style="opacity: 0.45;">؟</div></div>
+
+          <div class="choices">
+            <div class="choice-group">
+              <div class="choice-title">مين؟</div>
+              <div class="choice-buttons" id="subjectChoices"><button class="choice"><div style="font-size:32px;">👧</div><div>بنت</div></button><button class="choice"><div style="font-size:32px;">👦</div><div>صبي</div></button><button class="choice"><div style="font-size:32px;">🐻</div><div>دب</div></button></div>
+            </div>
+
+            <div class="choice-group">
+              <div class="choice-title">الدائرة الحمراء</div>
+              <div class="choice-buttons" id="amChoices"><button class="choice"><div class="red-circle" style="width:42px;height:42px;font-size:17px;margin:auto;">عم</div></button></div>
+            </div>
+
+            <div class="choice-group">
+              <div class="choice-title">🎀 أو 🥸؟</div>
+              <div class="choice-buttons" id="genderChoices"><button class="choice"><div style="font-size:32px;">🎀</div><div>ت</div></button><button class="choice"><div style="font-size:32px;">🥸</div><div>ي</div></button></div>
+            </div>
+
+            <div class="choice-group">
+              <div class="choice-title">شو عم يعمل؟</div>
+              <div class="choice-buttons" id="actionChoices"><button class="choice"><div style="font-size:32px;">🧸</div><div>لعب</div></button><button class="choice"><div style="font-size:32px;">🎨</div><div>لوّن</div></button><button class="choice"><div style="font-size:32px;">📖</div><div>قرأ</div></button></div>
+            </div>
+          </div>
+
+          <div class="controls">
+            <button class="success" onclick="checkAnswer()">✅ تأكدي</button>
+            <button class="warning" onclick="resetChoices()">🔄 عيدي</button>
+          </div>
+          <div class="feedback" id="level2Feedback"></div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <audio id="mashaAudio" src="file:///C:/Users/Rayan/Downloads/Telegram%20Desktop/audio-2026-05-27-15-20-07_FLWM2XHd.mp3"></audio>
+  <audio id="successAudio" src=""></audio>
+
+  <script>
+    /************************************************************
+     * EASY EDITING AREA
+     *
+     * VERY IMPORTANT:
+     * Browsers / CodePen usually cannot read C:\Users\... paths.
+     * Put this HTML file, the images, and the audio files in ONE folder.
+     * Then rename the files to short easy names like below.
+     *
+     * Example folder:
+     * masha-game.html
+     * toy-house.png
+     * masha-talk.png
+     * bent-lawwen.mp3
+     * sabe-am-elaab.mp3
+     * bent-eqra.mp3
+     * deb-eqra.mp3
+     ************************************************************/
+
+    const sceneImageFile = "file:///C:/Users/Rayan/Downloads/ChatGPT%20Image%20May%2026,%202026,%2001_08_10%20PM.png";
+    const mashaTalkingImageFile = "file:///C:/Users/Rayan/Downloads/ChatGPT%20Image%20May%2026,%202026,%2001_25_21%20PM.png";
+    const successAudioFile = "";
+
+    const cases = [
+      {
+        label: "صبي عم يلعب",
+        wrong: "صبي عم العب",
+        correctText: "صبي عم يلعب",
+        subject: { text: "صبي", icon: "👦" },
+        am: { text: "عم", icon: "red-circle" },
+        gender: { text: "ي", icon: "🥸" },
+        action: { text: "لعب", icon: "🧸" },
+        audio: "file:///C:/Users/Rayan/Downloads/Telegram%20Desktop/audio-2026-05-27-15-20-07_FLWM2XHd.mp3",
+        sceneImage: "file:///C:/Users/Rayan/Downloads/masha%20plays.jpg",
+        toyIndex: 0
+      },
+      {
+        label: "بنت عم تلوّن",
+        wrong: "بنت لوّن",
+        correctText: "بنت عم تلوّن",
+        subject: { text: "بنت", icon: "👧" },
+        am: { text: "عم", icon: "red-circle" },
+        gender: { text: "ت", icon: "🎀" },
+        action: { text: "لوّن", icon: "🎨" },
+        audio: "file:///C:/Users/Rayan/Downloads/Telegram%20Desktop/audio-2026-05-27-15-20-07_jTS8lLIv.mp3",
+        sceneImage: "file:///C:/Users/Rayan/Downloads/masha%20paint.jpg",
+        toyIndex: 1
+      },
+      {
+        label: "بنت عم تقرأ",
+        wrong: "بنت اقرا",
+        correctText: "بنت عم تقرأ",
+        subject: { text: "بنت", icon: "👧" },
+        am: { text: "عم", icon: "red-circle" },
+        gender: { text: "ت", icon: "🎀" },
+        action: { text: "قرأ", icon: "📖" },
+        audio: "file:///C:/Users/Rayan/Downloads/Telegram%20Desktop/audio-2026-05-27-15-20-07_7ltomNqA.mp3",
+        sceneImage: "file:///C:/Users/Rayan/Downloads/masha.jpg",
+        toyIndex: 2
+      },
+      {
+        label: "دب عم يقرأ",
+        wrong: "دب اقرا",
+        correctText: "دب عم يقرأ",
+        subject: { text: "دب", icon: "🐻" },
+        am: { text: "عم", icon: "red-circle" },
+        gender: { text: "ي", icon: "🥸" },
+        action: { text: "قرأ", icon: "📖" },
+        audio: "file:///C:/Users/Rayan/Downloads/Telegram%20Desktop/audio-2026-05-27-15-20-07_h6F7CC3k.mp3",
+        sceneImage: "file:///C:/Users/Rayan/Downloads/masha%20bear.jpg",
+        toyIndex: 3
+      }
+    ];
+
+    /************************************************************
+     * GAME LOGIC
+     ************************************************************/
+
+    let currentIndex = 0;
+    let selected = { subject: null, am: null, gender: null, action: null };
+    const completed = new Set();
+
+    const wrongSentenceEl = document.getElementById("wrongSentence");
+    const correctStripEl = document.getElementById("correctStrip");
+    const buildStripEl = document.getElementById("buildStrip");
+    const level1El = document.getElementById("level1");
+    const level2El = document.getElementById("level2");
+    const level1FeedbackEl = document.getElementById("level1Feedback");
+    const level2FeedbackEl = document.getElementById("level2Feedback");
+    const starsEl = document.getElementById("stars");
+    const mashaAudio = document.getElementById("mashaAudio");
+    const successAudio = document.getElementById("successAudio");
+    const sceneImage = document.getElementById("sceneImage");
+    const scenePlaceholder = document.getElementById("scenePlaceholder");
+    const mashaVisual = document.getElementById("mashaVisual");
+    const mashaVisualPlaceholder = document.getElementById("mashaVisualPlaceholder");
+
+    window.onload = () => {
+      loadImage(sceneImage, scenePlaceholder, sceneImageFile);
+      loadImage(mashaVisual, mashaVisualPlaceholder, mashaTalkingImageFile);
+      if (successAudioFile) successAudio.src = successAudioFile;
+      startCase(0);
+    };
+
+    function loadImage(imgEl, placeholderEl, file) {
+      if (!file) return;
+      imgEl.src = file;
+      imgEl.onload = () => {
+        imgEl.style.display = "block";
+        placeholderEl.style.display = "none";
+      };
+    }
+
+    function startCase(index) {
+      currentIndex = index;
+      const item = cases[currentIndex];
+      wrongSentenceEl.textContent = item.wrong;
+      mashaAudio.src = item.audio;
+
+      // Change the main picture according to the selected action
+      if (item.sceneImage) {
+        loadImage(sceneImage, scenePlaceholder, item.sceneImage);
+      }
+
+      level1El.classList.add("hidden");
+      level2El.classList.add("hidden");
+      level1FeedbackEl.textContent = "";
+      level2FeedbackEl.textContent = "";
+      document.querySelectorAll(".character-card").forEach((card, i) => {
+        card.classList.toggle("active", i === index);
+        card.classList.toggle("done", completed.has(i));
+      });
+      resetChoices();
+    }
+
+    function nextCase() {
+      currentIndex = (currentIndex + 1) % cases.length;
+      startCase(currentIndex);
+    }
+
+    function playMashaAudio() {
+      if (!mashaAudio.src) return;
+      mashaAudio.currentTime = 0;
+      mashaAudio.play().catch(() => {
+        alert("إذا ما اشتغل الصوت، تأكدي أن ملف الصوت بنفس مجلد ملف HTML وأن الاسم مطابق تماماً.");
+      });
+    }
+
+    function showLevel1() {
+      level1El.classList.remove("hidden");
+      level2El.classList.add("hidden");
+      renderCorrectStrip();
+      level1FeedbackEl.textContent = "شاطرين! هيدي الجملة الصح. خلّينا نقولها ببطء وبعدين بسرعة.";
+      giveStar(false);
+    }
+
+    function showLevel2() {
+      level2El.classList.remove("hidden");
+      level1El.classList.add("hidden");
+      resetChoices();
+      renderChoices();
+    }
+
+    function sayTogether() {
+      const item = cases[currentIndex];
+      wrongSentenceEl.textContent = item.correctText;
+      level1El.classList.remove("hidden");
+      renderCorrectStrip();
+      level1FeedbackEl.textContent = "دور مليكة: قولي الجملة كاملة!";
+      pulseCorrectStrip();
+    }
+
+    function renderCorrectStrip() {
+      const item = cases[currentIndex];
+      correctStripEl.innerHTML = "";
+      correctStripEl.appendChild(makeStripCard(item.subject));
+      correctStripEl.appendChild(makeStripCard(item.am));
+      correctStripEl.appendChild(makeStripCard(item.gender));
+      correctStripEl.appendChild(makeStripCard(item.action));
+
+      const textCard = document.createElement("div");
+      textCard.className = "strip-card";
+      textCard.style.minWidth = "230px";
+      textCard.innerHTML = `<div style="font-size:26px;color:#2b8a3e;">${item.correctText}</div>`;
+      correctStripEl.appendChild(textCard);
+    }
+
+    function makeStripCard(part) {
+      const card = document.createElement("div");
+      card.className = "strip-card";
+      if (part.icon === "red-circle") {
+        card.innerHTML = `<div class="red-circle">عم</div><div>${part.text}</div>`;
+      } else {
+        card.innerHTML = `<div class="emoji">${part.icon}</div><div>${part.text}</div>`;
+      }
+      return card;
+    }
+
+    function renderChoices() {
+      renderChoiceGroup("subjectChoices", "subject", [
+        { text: "بنت", icon: "👧" },
+        { text: "صبي", icon: "👦" },
+        { text: "دب", icon: "🐻" }
+      ]);
+
+      renderChoiceGroup("amChoices", "am", [
+        { text: "عم", icon: "red-circle" }
+      ]);
+
+      renderChoiceGroup("genderChoices", "gender", [
+        { text: "ت", icon: "🎀" },
+        { text: "ي", icon: "🥸" }
+      ]);
+
+      renderChoiceGroup("actionChoices", "action", [
+        { text: "لعب", icon: "🧸" },
+        { text: "لوّن", icon: "🎨" },
+        { text: "قرأ", icon: "📖" }
+      ]);
+    }
+
+    function renderChoiceGroup(containerId, key, options) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = "";
+      options.forEach(option => {
+        const btn = document.createElement("button");
+        btn.className = "choice";
+        if (option.icon === "red-circle") {
+          btn.innerHTML = `<div class="red-circle" style="width:42px;height:42px;font-size:17px;margin:auto;">عم</div>`;
+        } else {
+          btn.innerHTML = `<div style="font-size:32px;">${option.icon}</div><div>${option.text}</div>`;
+        }
+        btn.onclick = () => {
+          selected[key] = option;
+          [...container.children].forEach(child => child.classList.remove("selected"));
+          btn.classList.add("selected");
+          updateBuildStrip();
+        };
+        container.appendChild(btn);
+      });
+    }
+
+    function updateBuildStrip() {
+      buildStripEl.innerHTML = "";
+      ["subject", "am", "gender", "action"].forEach(key => {
+        if (selected[key]) {
+          buildStripEl.appendChild(makeStripCard(selected[key]));
+        } else {
+          const empty = document.createElement("div");
+          empty.className = "strip-card";
+          empty.style.opacity = "0.45";
+          empty.textContent = "؟";
+          buildStripEl.appendChild(empty);
+        }
+      });
+    }
+
+    function checkAnswer() {
+      const item = cases[currentIndex];
+      const isCorrect =
+        selected.subject?.text === item.subject.text &&
+        selected.am?.text === item.am.text &&
+        selected.gender?.text === item.gender.text &&
+        selected.action?.text === item.action.text;
+
+      if (isCorrect) {
+        completed.add(currentIndex);
+        level2FeedbackEl.textContent = "برافو مليكة! صحّحنا جملة ماشا وفيّقنا اللعبة!";
+        awakenToy(item.toyIndex);
+        giveStar(true);
+        document.querySelectorAll(".character-card").forEach((card, i) => {
+          card.classList.toggle("done", completed.has(i));
+        });
+      } else {
+        level2FeedbackEl.textContent = "قريب! اسمعي ماشا، شو ناقص الجملة؟";
+      }
+    }
+
+    function resetChoices() {
+      selected = { subject: null, am: null, gender: null, action: null };
+      updateBuildStrip();
+      level2FeedbackEl.textContent = "";
+      document.querySelectorAll(".choice").forEach(btn => btn.classList.remove("selected"));
+    }
+
+    function awakenToy(index) {
+      const toys = document.querySelectorAll(".toy");
+      if (toys[index]) toys[index].classList.add("awake");
+    }
+
+    function giveStar(bigReward) {
+      starsEl.textContent += "⭐";
+      if (starsEl.textContent.length > 5) starsEl.textContent = "⭐";
+      launchConfetti(bigReward ? 28 : 14);
+      playSuccessAudio();
+    }
+
+    function playSuccessAudio() {
+      if (!successAudio.src) return;
+      successAudio.currentTime = 0;
+      successAudio.play().catch(() => {});
+    }
+
+    function pulseCorrectStrip() {
+      correctStripEl.style.transform = "scale(1.03)";
+      correctStripEl.style.transition = "0.2s";
+      setTimeout(() => correctStripEl.style.transform = "scale(1)", 250);
+    }
+
+    function launchConfetti(amount) {
+      const symbols = ["🎉", "⭐", "🧸", "🎀", "✨", "🎨", "📖"];
+      for (let i = 0; i < amount; i++) {
+        const confetti = document.createElement("div");
+        confetti.className = "confetti";
+        confetti.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+        confetti.style.left = Math.random() * 100 + "vw";
+        confetti.style.animationDuration = 1.2 + Math.random() * 1.3 + "s";
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 2600);
+      }
+    }
+  </script>
+
+
+</body></html>
