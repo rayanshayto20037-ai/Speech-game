@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>سيارة المدود</title>
+  <style>
+    :root{
+      --bg1:#dff6ff;
+      --bg2:#fff7d6;
+      --ink:#17324d;
+      --panel:rgba(255,255,255,.9);
+      --road:#4b5563;
+      --road-edge:#f8fafc;
+      --accent:#ff8a65;
+      --good:#2e7d32;
+      --shadow:0 12px 30px rgba(23,50,77,.16);
+    }
+    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+    html,body{margin:0;min-height:100%;font-family:"Geeza Pro","Noto Naskh Arabic","Arial",sans-serif;background:linear-gradient(160deg,var(--bg1),var(--bg2));color:var(--ink);overflow-x:hidden}
+    body{touch-action:manipulation}
+    button{font:inherit}
+    .app{min-height:100vh;padding:max(14px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) max(18px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left));display:flex;flex-direction:column;gap:12px}
+    .header{background:var(--panel);border:2px solid rgba(255,255,255,.8);border-radius:24px;padding:14px 16px;box-shadow:var(--shadow);text-align:center}
+    h1{font-size:clamp(26px,5vw,46px);margin:0 0 4px;font-weight:900}
+    .sub{margin:0;font-size:clamp(15px,2.7vw,21px);font-weight:700}
+    .controls{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;background:var(--panel);border-radius:22px;padding:12px;box-shadow:var(--shadow)}
+    .letter-btn,.reset-btn{min-width:72px;min-height:62px;border:0;border-radius:18px;background:white;box-shadow:0 6px 14px rgba(0,0,0,.12);font-size:34px;font-weight:900;color:var(--ink);cursor:pointer;border:3px solid transparent}
+    .letter-btn.active{border-color:#ff7043;transform:translateY(-2px);background:#fff2ed}
+    .reset-btn{font-size:20px;padding:0 18px;background:#17324d;color:white}
+    .playground{position:relative;flex:1;min-height:650px;background:linear-gradient(#8ed8ff 0 25%,#9edb82 25% 100%);border-radius:28px;overflow:hidden;box-shadow:var(--shadow);border:3px solid rgba(255,255,255,.9)}
+    .sun{position:absolute;left:5%;top:4%;width:70px;height:70px;border-radius:50%;background:#ffd54f;box-shadow:0 0 0 12px rgba(255,213,79,.22)}
+    .cloud{position:absolute;width:120px;height:40px;background:white;border-radius:999px;opacity:.92}
+    .cloud:before,.cloud:after{content:"";position:absolute;background:white;border-radius:50%}
+    .cloud:before{width:50px;height:50px;right:18px;top:-24px}.cloud:after{width:62px;height:62px;left:18px;top:-30px}
+    .c1{top:8%;right:8%}.c2{top:15%;left:20%;transform:scale(.8)}
+    .instruction{position:absolute;top:22%;left:50%;transform:translateX(-50%);z-index:5;background:rgba(255,255,255,.93);padding:8px 15px;border-radius:15px;font-weight:900;font-size:clamp(15px,2.7vw,21px);white-space:nowrap;box-shadow:0 5px 12px rgba(0,0,0,.12)}
+    .roads{position:absolute;inset:31% 2% 3%;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;direction:rtl}
+    .road-zone{position:relative;border-radius:24px;overflow:hidden;background:rgba(255,255,255,.17);border:3px dashed rgba(255,255,255,.55);min-width:0}
+    .road-zone.hover{outline:7px solid rgba(255,235,59,.75);outline-offset:-7px}
+    .road-svg{width:100%;height:100%;display:block;overflow:visible}
+    .road-label{position:absolute;top:8px;right:50%;transform:translateX(50%);width:66px;height:66px;border-radius:50%;display:grid;place-items:center;background:white;font-weight:900;font-size:42px;box-shadow:0 5px 12px rgba(0,0,0,.18);z-index:3}
+    .finish{position:absolute;bottom:12px;right:50%;transform:translateX(50%);background:white;border-radius:16px;padding:7px 12px;font-size:clamp(26px,5vw,42px);font-weight:900;min-width:78px;text-align:center;box-shadow:0 5px 12px rgba(0,0,0,.16);z-index:4}
+    .finish.pop{animation:pop .5s ease}
+    @keyframes pop{50%{transform:translateX(50%) scale(1.22)}}
+    .car-card{position:absolute;z-index:20;left:50%;top:25%;transform:translate(-50%,-50%);width:130px;height:105px;touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab;filter:drop-shadow(0 9px 8px rgba(0,0,0,.24));display:flex;flex-direction:column;align-items:center;justify-content:center}
+    .car-card.dragging{cursor:grabbing;transform:translate(-50%,-50%) scale(1.06)}
+    .card-letter{position:absolute;top:-13px;left:50%;transform:translateX(-50%);width:62px;height:58px;background:#fff;border:4px solid #17324d;border-radius:15px;display:grid;place-items:center;font-size:39px;font-weight:900;z-index:3}
+    .car-body{position:absolute;bottom:14px;width:118px;height:54px;background:#ff7043;border:4px solid #17324d;border-radius:21px 28px 15px 15px}
+    .car-roof{position:absolute;bottom:62px;width:68px;height:32px;background:#ffab91;border:4px solid #17324d;border-bottom:0;border-radius:20px 20px 0 0}
+    .window{position:absolute;bottom:65px;width:25px;height:22px;background:#b3e5fc;border:3px solid #17324d}.w1{left:38px;border-radius:10px 0 0 0}.w2{right:38px;border-radius:0 10px 0 0}
+    .wheel{position:absolute;bottom:3px;width:28px;height:28px;border-radius:50%;background:#263238;border:5px solid #90a4ae}.wh1{left:13px}.wh2{right:13px}
+    .feedback{position:absolute;z-index:30;left:50%;top:52%;transform:translate(-50%,-50%) scale(.85);min-width:min(80vw,390px);background:rgba(255,255,255,.97);border:5px solid #2e7d32;border-radius:28px;padding:18px;text-align:center;box-shadow:0 18px 45px rgba(0,0,0,.24);opacity:0;pointer-events:none;transition:.22s}
+    .feedback.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
+    .feedback .small{font-size:20px;font-weight:800}.feedback .word{font-size:72px;line-height:1.15;font-weight:900;color:var(--good)}
+    .hint{font-size:13px;text-align:center;opacity:.75;margin:0}
+    @media (max-width:700px){
+      .playground{min-height:690px}
+      .roads{inset:34% 1.5% 2%;gap:5px}
+      .road-label{width:54px;height:54px;font-size:35px}
+      .finish{font-size:29px;padding:5px 7px;min-width:61px}
+      .letter-btn{min-width:62px;min-height:57px;font-size:31px}
+      .car-card{width:116px;height:98px}
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <section class="header">
+      <h1>🚗 سيارة المدود</h1>
+      <p class="sub">اختاري الحرف، ثم اسحبي السيارة بإصبعك نحو طريق المدّ.</p>
+    </section>
+
+    <section class="controls" aria-label="اختيار الحرف">
+      <button class="letter-btn active" data-letter="ر" aria-pressed="true">ر</button>
+      <button class="letter-btn" data-letter="د" aria-pressed="false">د</button>
+      <button class="letter-btn" data-letter="ف" aria-pressed="false">ف</button>
+      <button class="letter-btn" data-letter="ح" aria-pressed="false">ح</button>
+      <button class="reset-btn" id="resetBtn">إعادة السيارة</button>
+    </section>
+
+    <section class="playground" id="playground">
+      <div class="sun"></div><div class="cloud c1"></div><div class="cloud c2"></div>
+      <div class="instruction">اسحبي السيارة إلى أحد الطرق 👇</div>
+
+      <div class="car-card" id="car" role="button" aria-label="سيارة قابلة للسحب">
+        <div class="card-letter" id="cardLetter">ر</div>
+        <div class="car-roof"></div><div class="window w1"></div><div class="window w2"></div>
+        <div class="car-body"></div><div class="wheel wh1"></div><div class="wheel wh2"></div>
+      </div>
+
+      <div class="roads">
+        <div class="road-zone" data-vowel="و">
+          <div class="road-label">و</div>
+          <svg class="road-svg" viewBox="0 0 300 520" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M65 65 C250 55 265 205 150 230 C40 255 60 370 235 365 C270 365 270 430 220 470" fill="none" stroke="white" stroke-width="82" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>
+            <path d="M65 65 C250 55 265 205 150 230 C40 255 60 370 235 365 C270 365 270 430 220 470" fill="none" stroke="#4b5563" stroke-width="66" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M65 65 C250 55 265 205 150 230 C40 255 60 370 235 365 C270 365 270 430 220 470" fill="none" stroke="#f9f871" stroke-width="5" stroke-dasharray="18 18" stroke-linecap="round"/>
+          </svg>
+          <div class="finish">و</div>
+        </div>
+
+        <div class="road-zone" data-vowel="ا">
+          <div class="road-label">ا</div>
+          <svg class="road-svg" viewBox="0 0 300 520" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M150 65 L150 470" fill="none" stroke="white" stroke-width="82" stroke-linecap="round" opacity=".9"/>
+            <path d="M150 65 L150 470" fill="none" stroke="#4b5563" stroke-width="66" stroke-linecap="round"/>
+            <path d="M150 65 L150 470" fill="none" stroke="#f9f871" stroke-width="5" stroke-dasharray="18 18" stroke-linecap="round"/>
+          </svg>
+          <div class="finish">ا</div>
+        </div>
+
+        <div class="road-zone" data-vowel="ي">
+          <div class="road-label">ي</div>
+          <svg class="road-svg" viewBox="0 0 300 520" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M65 75 C245 75 235 230 115 245 C45 255 55 390 235 390 L235 470" fill="none" stroke="white" stroke-width="82" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>
+            <path d="M65 75 C245 75 235 230 115 245 C45 255 55 390 235 390 L235 470" fill="none" stroke="#4b5563" stroke-width="66" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M65 75 C245 75 235 230 115 245 C45 255 55 390 235 390 L235 470" fill="none" stroke="#f9f871" stroke-width="5" stroke-dasharray="18 18" stroke-linecap="round"/>
+            <circle cx="185" cy="500" r="12" fill="#17324d"/><circle cx="235" cy="500" r="12" fill="#17324d"/>
+          </svg>
+          <div class="finish">ي</div>
+        </div>
+      </div>
+
+      <div class="feedback" id="feedback" aria-live="polite">
+        <div class="small">أحسنتِ! أصبح المقطع:</div>
+        <div class="word" id="resultWord">رو</div>
+      </div>
+    </section>
+    <p class="hint">يعمل بالسحب باللمس على iPad وبالفأرة على الكمبيوتر.</p>
+  </main>
+
+<script>
+(() => {
+  const car = document.getElementById('car');
+  const playground = document.getElementById('playground');
+  const cardLetter = document.getElementById('cardLetter');
+  const feedback = document.getElementById('feedback');
+  const resultWord = document.getElementById('resultWord');
+  const resetBtn = document.getElementById('resetBtn');
+  const letterButtons = [...document.querySelectorAll('.letter-btn')];
+  const zones = [...document.querySelectorAll('.road-zone')];
+  let selectedLetter = 'ر';
+  let dragging = false;
+  let pointerId = null;
+  let dragOffsetX = 0;
+  let dragOffsetY = 0;
+  let feedbackTimer;
+
+  function setCarPosition(x, y) {
+    const p = playground.getBoundingClientRect();
+    const halfW = car.offsetWidth / 2;
+    const halfH = car.offsetHeight / 2;
+    const clampedX = Math.max(halfW, Math.min(p.width - halfW, x));
+    const clampedY = Math.max(halfH, Math.min(p.height - halfH, y));
+    car.style.left = clampedX + 'px';
+    car.style.top = clampedY + 'px';
+  }
+
+  function resetCar() {
+    const p = playground.getBoundingClientRect();
+    setCarPosition(p.width / 2, p.height * 0.25);
+    zones.forEach(z => z.classList.remove('hover'));
+    feedback.classList.remove('show');
+  }
+
+  function pointInside(rect, x, y) {
+    return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
+  }
+
+  function activeZoneAt(x, y) {
+    return zones.find(z => pointInside(z.getBoundingClientRect(), x, y)) || null;
+  }
+
+  function showResult(vowel, zone) {
+    const syllable = selectedLetter + vowel;
+    resultWord.textContent = syllable; // Browser Arabic shaping renders ف/ح initially in فا، فو، في، حا، حو، حي.
+    zone.querySelector('.finish').textContent = syllable;
+    zone.querySelector('.finish').classList.remove('pop');
+    void zone.querySelector('.finish').offsetWidth;
+    zone.querySelector('.finish').classList.add('pop');
+    clearTimeout(feedbackTimer);
+    feedback.classList.add('show');
+    feedbackTimer = setTimeout(() => feedback.classList.remove('show'), 1500);
+  }
+
+  function startDrag(e) {
+    e.preventDefault();
+    dragging = true;
+    pointerId = e.pointerId;
+    car.setPointerCapture(pointerId);
+    car.classList.add('dragging');
+    const r = car.getBoundingClientRect();
+    dragOffsetX = e.clientX - (r.left + r.width / 2);
+    dragOffsetY = e.clientY - (r.top + r.height / 2);
+  }
+
+  function moveDrag(e) {
+    if (!dragging || e.pointerId !== pointerId) return;
+    e.preventDefault();
+    const p = playground.getBoundingClientRect();
+    setCarPosition(e.clientX - p.left - dragOffsetX, e.clientY - p.top - dragOffsetY);
+    const zone = activeZoneAt(e.clientX, e.clientY);
+    zones.forEach(z => z.classList.toggle('hover', z === zone));
+  }
+
+  function endDrag(e) {
+    if (!dragging || e.pointerId !== pointerId) return;
+    e.preventDefault();
+    dragging = false;
+    car.classList.remove('dragging');
+    try { car.releasePointerCapture(pointerId); } catch(_) {}
+    const zone = activeZoneAt(e.clientX, e.clientY);
+    zones.forEach(z => z.classList.remove('hover'));
+    if (zone) {
+      showResult(zone.dataset.vowel, zone);
+      const p = playground.getBoundingClientRect();
+      const z = zone.getBoundingClientRect();
+      setCarPosition(z.left - p.left + z.width / 2, z.bottom - p.top - 78);
+      setTimeout(resetCar, 1650);
+    }
+    pointerId = null;
+  }
+
+  car.addEventListener('pointerdown', startDrag, {passive:false});
+  car.addEventListener('pointermove', moveDrag, {passive:false});
+  car.addEventListener('pointerup', endDrag, {passive:false});
+  car.addEventListener('pointercancel', endDrag, {passive:false});
+
+  letterButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      selectedLetter = btn.dataset.letter;
+      cardLetter.textContent = selectedLetter;
+      letterButtons.forEach(b => {
+        const active = b === btn;
+        b.classList.toggle('active', active);
+        b.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+      document.querySelectorAll('.finish').forEach((f, i) => f.textContent = ['و','ا','ي'][i]);
+      resetCar();
+    });
+  });
+
+  resetBtn.addEventListener('click', resetCar);
+  window.addEventListener('resize', resetCar);
+  window.addEventListener('orientationchange', () => setTimeout(resetCar, 250));
+  resetCar();
+})();
+</script>
+</body>
+</html>
